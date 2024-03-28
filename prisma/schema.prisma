@@ -8,3 +8,33 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+
+model User{
+  id  String @id @default(uuid())
+  name String
+  email String @unique
+  password String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Flat{
+  id  String @id @default(uuid())
+  squareFeet Int
+  totalBedrooms Int
+  totalRooms Int
+  utilitiesDescription String
+  location String
+  description String
+  rent Int
+  availability Boolean
+  advanceAmount Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("flats")
+
+}
