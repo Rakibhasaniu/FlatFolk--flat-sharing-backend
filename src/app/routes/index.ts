@@ -1,12 +1,13 @@
 import { Router } from "express";
+import { FlatRoutes } from "../modules/flat/flat.route";
 
 
 const router = Router();
 
 const moduleRoutes = [
     {
-        path:'/user',
-        route: UserRoutes
+        path:'/flat',
+        route: FlatRoutes
     },
 ]
 
