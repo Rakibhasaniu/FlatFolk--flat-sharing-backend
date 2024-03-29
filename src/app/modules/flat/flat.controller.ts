@@ -29,7 +29,7 @@ const getAllFlat:RequestHandler = catchAsync(async(req,res) => {
     const filters = pick(req.query,flatFilterAbleFields);
     const options = pick(req.query, ['limit', 'page', 'sortBy', 'sortOrder'])
 
-    const result = await FlatServices.getAllFlatFromDB();
+    const result = await FlatServices.getAllFlatFromDB(filters,options);
 
     sendResponse(res,{
         statusCode:httpStatus.OK,
