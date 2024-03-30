@@ -6,21 +6,23 @@ import { AuthServices } from "./auth.service";
 
 const login:RequestHandler = catchAsync(async(req,res) => {
     const result = await AuthServices.logInUser(req.body);
-    const {refreshToken} = result;
+    const { refreshToken, accessToken, user } = result; 
     res.cookie('refreshToken',refreshToken,{
         secure:false,
         httpOnly : true
     });
 
-    sendResponse(res,{
-        statusCode:httpStatus.OK,
-        success:true,
-        message:'Login Successfully',
-        data:{
-            accessToken:result.accessToken,
-            // needsPasswordChange:result.needPasswordChange,
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'User logged in successfully',
+        data: {
+            id: user.id, // Assuming these fields are available in the `user` object
+            name: user.name,
+            email: user.email,
+            token: accessToken,
         }
-    })
+    });
 })
 const refreshToken:RequestHandler = catchAsync(async(req,res) => {
     const {refreshToken} = req.cookies;

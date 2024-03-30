@@ -31,7 +31,11 @@ const logInUser = async(payload:{
     return {
         accessToken,
         refreshToken,
-        // needPasswordChange:userData.needPasswordChange
+        user: {
+            id: userData.id,
+            name: userData.name,
+            email: userData.email,
+        }
     };
 }
 
