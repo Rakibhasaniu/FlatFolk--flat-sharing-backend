@@ -14,7 +14,7 @@ const auth = () => {
             }
 
             const verifiedUser = decodedToken.verifyToken(token, 'asjchgsccvbfh');
-            // console.log(verifiedUser)
+            console.log(verifiedUser)
 
             req.user = verifiedUser;
 
