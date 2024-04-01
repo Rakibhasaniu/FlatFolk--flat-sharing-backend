@@ -10,7 +10,7 @@ const router = Router();
 
 const moduleRoutes = [
     {
-        path:'/flat',
+        path:'/flats',
         route: FlatRoutes
     },
     {

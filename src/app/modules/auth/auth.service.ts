@@ -19,12 +19,10 @@ const logInUser = async(payload:{
         }
     const accessToken = generateToken({
         email:userData.email,
-        // role:userData.role
         id:userData.id
     },'asjchgsccvbfh','15d');
     const refreshToken =generateToken({
         email:userData.email,
-        // role:userData.role
         id:userData.id
     },
     'kvhruhgjreakcnklefh', 
@@ -51,22 +49,49 @@ const refreshToken = async(token:string)=>{
     const isUserExist = await prisma.user.findUniqueOrThrow({
         where:{
             email:decodedData?.email,
-            // status:UserStatus.ACTIVE
             id:decodedData.id
         }
     });
     const accessToken = generateToken({
         email:isUserExist?.email,
-        // role:isUserExist?.role
     },'asjchgsccvbfh','15d');
     return {
         accessToken,
-        // needPasswordChange:isUserExist?.needPasswordChange
     };
+}
+
+const registerUser = async(payload:any) => {
+    const { name, email, password, bio, profession, address } = payload;
+    const salt = bcrypt.genSaltSync(10);
+        const hash = bcrypt.hashSync(password, salt);
+
+        const user = await prisma.user.create({
+            data: {
+                name,
+                email,
+                password: hash,
+                profile: {
+                    create: {
+                        bio,
+                        profession,
+                        address,
+                    },
+                },
+            },
+            // include: {
+            //     profile: true, 
+            // },
+        });
+
+        
+        const { password: _, ...userDataWithoutPassword } = user;
+        return userDataWithoutPassword;
+        
 }
 
 export const AuthServices = {
     logInUser,
     refreshToken,
+    registerUser
     
 }

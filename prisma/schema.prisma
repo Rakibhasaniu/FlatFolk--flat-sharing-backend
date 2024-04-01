@@ -47,7 +47,7 @@ model Flat{
   location String
   description String
   rent Int
-  availability Boolean
+  availability Boolean @default(true)
   advanceAmount Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -64,9 +64,14 @@ model Booking {
   flatId    String
   user      User        @relation(fields: [userId], references: [id])
   userId    String
-  status    String      @default("PENDING")
+  status    bookingStatus     @default(PENDING)
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
 
   @@index([flatId, userId], name: "unique_booking_flat_user_idx")
+}
+enum bookingStatus{
+  PENDING
+  BOOKED
+  REJECTED
 }

@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 app.get('/', (req:Request, res:Response) => {
   res.send('Flat Sharing Server Is Running')
 })
-app.use('/api/v1',router);
+app.use('/api/',router);
 app.use(globalErrorHandler);
 
 export default app;

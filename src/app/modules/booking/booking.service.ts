@@ -4,18 +4,12 @@ import prisma from "../../utils/prisma"
 
 
 const createFlatBookingIntoDB = async(id:any,userId:any) => {
-    // console.log("servse",id)
-    // console.log("servse",userId)
+    
     const flat = await prisma.flat.findUniqueOrThrow({
         where:{
             id,
         }
        })
-    //    console.log(flat)
-
-    if (!flat) {
-        throw new Error('Flat with the provided ID does not exist');
-    }
     
     const booking = await prisma.booking.create({
         data: {
@@ -37,9 +31,42 @@ const createFlatBookingIntoDB = async(id:any,userId:any) => {
 }
 
 const getALlBookingFromDB = async(userId:string) => {
-    const = 
+    const bookingRequests = await prisma.booking.findMany({
+        where: {
+          userId: userId
+        },
+        select: {
+          id: true,
+          userId: true,
+          flatId: true,
+          status: true,
+          createdAt: true,
+          updatedAt: true
+        }
+      });
+      return bookingRequests;
+}
+
+const updateBookingFromDB = async(id:string,payload:any) => {
+    const data =await prisma.booking.findUniqueOrThrow({
+        where:{
+            id,
+        }
+       })
+       console.log(data)
+    console.log("update", payload);
+    console.log("id", id);
+       const result = await prisma.booking.update({
+           where:{
+               id,
+           },
+           data:payload,
+       })
+       return result;
 }
 
 export const BookingServices = {
     createFlatBookingIntoDB,
+    getALlBookingFromDB,
+    updateBookingFromDB
 }

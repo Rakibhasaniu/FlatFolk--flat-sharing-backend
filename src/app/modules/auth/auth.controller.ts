@@ -34,15 +34,27 @@ const refreshToken:RequestHandler = catchAsync(async(req,res) => {
         success:true,
         message:'Refresh token generated Successfully',
         data:result
-        // data:{
-        //     accessToken:result.accessToken,
-        //     needsPasswordChange:result.needPasswordChange,
-        // }
+        
+    })
+})
+
+const register = catchAsync( async (req, res) => {
+    const payload = req.body;
+    const result = await AuthServices.registerUser(payload);
+ 
+
+    sendResponse(res,{
+        statusCode:httpStatus.CREATED,
+        success:true,
+        message:'User registered successfully',
+        data:result
+        
     })
 })
 
 export const AuthController ={
     login,
     refreshToken,
+    register
     
 }
