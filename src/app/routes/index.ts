@@ -13,10 +13,10 @@ const moduleRoutes = [
         path:'/flats',
         route: FlatRoutes
     },
-    {
-        path:'/user',
-        route: UserRoute
-    },
+    // {
+    //     path:'/user',
+    //     route: UserRoute
+    // },
     {
         path:'/',
         route: UserProfileRoutes

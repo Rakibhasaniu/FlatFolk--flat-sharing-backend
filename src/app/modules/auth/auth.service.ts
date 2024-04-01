@@ -60,38 +60,38 @@ const refreshToken = async(token:string)=>{
     };
 }
 
-const registerUser = async(payload:any) => {
-    const { name, email, password, bio, profession, address } = payload;
-    const salt = bcrypt.genSaltSync(10);
-        const hash = bcrypt.hashSync(password, salt);
+const createUserIntoDB = async(data:any) => {
+    const hashedPassword:string=await bcrypt.hashSync(data.password, 10);
 
-        const user = await prisma.user.create({
-            data: {
-                name,
-                email,
-                password: hash,
-                profile: {
-                    create: {
-                        bio,
-                        profession,
-                        address,
-                    },
-                },
-            },
-            // include: {
-            //     profile: true, 
-            // },
-        });
+    const userData = {
+      name:data.name,
+      email:data.email,
+      password:hashedPassword
+    }
+    const userProfile = {
+      bio:data.bio,
+      profession:data.profession,
+      address:data.address
+    }
+    const result = await prisma.$transaction(async(transactionClient) => {
+      const user = await transactionClient.user.create({
+        data: userData
+      })
+  
+      const profile = await transactionClient.userProfile.create({
+          data:{...userProfile,userId:user.id}
+      })
+  
+      return user;
 
-        
-        const { password: _, ...userDataWithoutPassword } = user;
-        return userDataWithoutPassword;
-        
-}
+    })
+    return result;
+  }
+
 
 export const AuthServices = {
     logInUser,
     refreshToken,
-    registerUser
+    createUserIntoDB
     
 }

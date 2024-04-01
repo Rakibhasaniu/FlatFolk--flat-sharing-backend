@@ -38,11 +38,8 @@ const refreshToken:RequestHandler = catchAsync(async(req,res) => {
     })
 })
 
-const register = catchAsync( async (req, res) => {
-    const payload = req.body;
-    const result = await AuthServices.registerUser(payload);
- 
-
+const register = catchAsync(async (req, res) => {
+    const result = await AuthServices.createUserIntoDB(req.body);
     sendResponse(res,{
         statusCode:httpStatus.CREATED,
         success:true,
