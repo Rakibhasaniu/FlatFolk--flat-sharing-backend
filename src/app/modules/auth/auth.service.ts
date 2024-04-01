@@ -20,10 +20,12 @@ const logInUser = async(payload:{
     const accessToken = generateToken({
         email:userData.email,
         // role:userData.role
+        id:userData.id
     },'asjchgsccvbfh','15d');
     const refreshToken =generateToken({
         email:userData.email,
         // role:userData.role
+        id:userData.id
     },
     'kvhruhgjreakcnklefh', 
     '30d'
@@ -50,6 +52,7 @@ const refreshToken = async(token:string)=>{
         where:{
             email:decodedData?.email,
             // status:UserStatus.ACTIVE
+            id:decodedData.id
         }
     });
     const accessToken = generateToken({
