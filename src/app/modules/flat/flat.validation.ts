@@ -10,10 +10,9 @@ const flatValidationSchema = z.object({
     location: z.string(),
     description: z.string(),
     rent: z.number(),
-    availability: z.boolean(),
+    availability: z.boolean().default(true),
     advanceAmount: z.number(),
-    createdAt: z.date(),
-    updatedAt: z.date(),
+    
     })
 });
 const updateFlatValidationSchema = z.object({

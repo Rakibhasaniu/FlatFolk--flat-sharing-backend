@@ -2,7 +2,9 @@ import httpStatus from "http-status";
 import catchAsync from "../../utils/catchAsync";
 import sendResponse from "../../utils/sendResponse";
 import { BookingServices } from "./booking.service";
-
+interface AuthenticatedRequest extends Request {
+    user: { id: string }; // Define the structure of user object here
+}
 
 const createFlat = catchAsync(async(req,res) => {
     const {flatId} = req.body;
