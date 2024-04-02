@@ -17,6 +17,7 @@ const auth = () => {
             // console.log(verifiedUser)
 
             req.user = verifiedUser;
+            // req.token=token;
 
             next();
         } catch (err) {
