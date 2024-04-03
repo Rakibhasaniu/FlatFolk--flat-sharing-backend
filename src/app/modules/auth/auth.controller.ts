@@ -17,7 +17,7 @@ const login:RequestHandler = catchAsync(async(req,res) => {
         success: true,
         message: 'User logged in successfully',
         data: {
-            id: user.id, // Assuming these fields are available in the `user` object
+            id: user.id, 
             name: user.name,
             email: user.email,
             token: accessToken,

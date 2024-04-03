@@ -10,7 +10,7 @@ const auth = () => {
             const token = req.headers.authorization;
 
             if (!token) {
-                throw new AppError(httpStatus.UNAUTHORIZED, "You are not authorized!");
+                throw new AppError(httpStatus.UNAUTHORIZED, "Unauthorized Access");
             }
 
             const verifiedUser = decodedToken.verifyToken(token, 'asjchgsccvbfh');

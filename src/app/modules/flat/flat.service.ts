@@ -10,13 +10,12 @@ const addFlatIntoDB = async(payload:any) => {
     });
     return result;
 }
-const getAllFlatFromDB = async (params:any, options: any) => {
-    const { page, limit, skip } = paginationHelper.calculatePagination(options);
+const getAllFlatFromDB = async (params:any,options:any) => {
+    // const { page, limit, skip } = paginationHelper.calculatePagination(options);
     const { searchTerm, ...filterData } = params;
 
     const andCondions: Prisma.FlatWhereInput[] = [];
 
-    //console.log(filterData);
     if (params.searchTerm) {
         andCondions.push({
             OR: flatSearchAbleFields.map(field => ({
@@ -38,36 +37,35 @@ const getAllFlatFromDB = async (params:any, options: any) => {
         })
     };
 
-    // andCondions.push({
-    //     isDeleted: false
-    // })
 
     //console.dir(andCondions, { depth: 'inifinity' })
     const whereConditons: Prisma.FlatWhereInput = { AND: andCondions }
 
     const result = await prisma.flat.findMany({
         where: whereConditons,
-        skip,
-        take: limit,
-        orderBy: options.sortBy && options.sortOrder ? {
-            [options.sortBy]: options.sortOrder
-        } : {
-            createdAt: 'desc'
-        }
+        // skip,
+        // take: limit,
+        // orderBy: options.sortBy && options.sortOrder ? {
+            // [options.sortBy]: options.sortOrder
+        // } : {
+            // createdAt: 'desc'
+        // }
     });
 
-    const total = await prisma.flat.count({
-        where: whereConditons
-    });
+    // const total = await prisma.flat.count({
+    //     where: whereConditons
+    // });
 
-    return {
-        meta: {
-            page,
-            limit,
-            total
-        },
-        data: result
-    };
+    // return {
+    //     meta: {
+    //         page,
+    //         limit,
+    //         total
+    //     },
+    //     data: result
+    // };
+   
+    return result;
 };
 
 
