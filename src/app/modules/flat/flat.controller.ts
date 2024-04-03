@@ -7,6 +7,8 @@ import sendResponse from "../../utils/sendResponse";
 import httpStatus from "http-status";
 
 
+
+
 const createFlat = catchAsync(async(req,res) => {
     
     const result = await FlatServices.addFlatIntoDB(req.body);
@@ -21,21 +23,35 @@ const createFlat = catchAsync(async(req,res) => {
 
 })
 
-const getAllFlat = catchAsync(async(req,res) => {
-    const filters = pick(req.query,flatFilterAbleFields);
+// const getAllFlat = catchAsync(async(req,res) => {
+//     const filters = pick(req.query,flatFilterAbleFields);
+//     const options = pick(req.query, ['limit', 'page', 'sortBy', 'sortOrder'])
+
+//     const result = await FlatServices.getAllFlatFromDB(filters,options);
+
+//     sendResponse(res,{
+//         statusCode:httpStatus.OK,
+//         success:true,
+//         message: 'Flats retrieved successfully',
+//         meta:result?.meta,
+//         data:result.data
+//     })
+// })
+const getAllFlat = catchAsync(async (req, res) => {
+    // console.log(req.query)
+    const filters = pick(req.query, flatFilterAbleFields);
     const options = pick(req.query, ['limit', 'page', 'sortBy', 'sortOrder'])
+    console.log(options)
+    const result = await FlatServices.getAllFlatFromDB(filters, options)
 
-    const result = await FlatServices.getAllFlatFromDB(filters,options);
-
-    sendResponse(res,{
-        statusCode:httpStatus.OK,
-        success:true,
-        message: 'Flats retrieved successfully',
-        meta:result?.meta,
-        data:result.data
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "Flats retrieved successfully",
+        meta: result.meta,
+        data: result.data
     })
 })
-
 const updateFlat = catchAsync(async(req,res)=>{
     const {flatId} = req.params;
     const result = await FlatServices.updateFlatFromDB(flatId,req.body)

@@ -10,9 +10,7 @@ const addFlatIntoDB = async(payload:any) => {
     });
     return result;
 }
-
-const getAllFlatFromDB = async(params:any,options:any) => {
-
+const getAllFlatFromDB = async (params:any, options: any) => {
     const { page, limit, skip } = paginationHelper.calculatePagination(options);
     const { searchTerm, ...filterData } = params;
 
@@ -47,29 +45,91 @@ const getAllFlatFromDB = async(params:any,options:any) => {
     //console.dir(andCondions, { depth: 'inifinity' })
     const whereConditons: Prisma.FlatWhereInput = { AND: andCondions }
 
-    const result = await prisma.flat.findMany(
-        {
-            where: whereConditons,
-            skip,
-            take: limit,
-            orderBy: options.sortBy && options.sortOrder ? {
-                [options.sortBy]: options.sortOrder
-            } : {
-                createdAt: 'desc'
-            }
+    const result = await prisma.flat.findMany({
+        where: whereConditons,
+        skip,
+        take: limit,
+        orderBy: options.sortBy && options.sortOrder ? {
+            [options.sortBy]: options.sortOrder
+        } : {
+            createdAt: 'desc'
         }
-    );
+    });
 
-    const total = await prisma.flat.count();
+    const total = await prisma.flat.count({
+        where: whereConditons
+    });
 
     return {
-        meta:{
-            total,
+        meta: {
+            page,
+            limit,
+            total
         },
-        data:result
-    }
+        data: result
+    };
+};
 
-}
+
+// const getAllFlatFromDB = async(params:any,options:any) => {
+
+//     const { page, limit, skip } = paginationHelper.calculatePagination(options);
+//     const { searchTerm, ...filterData } = params;
+
+//     const andCondions: Prisma.FlatWhereInput[] = [];
+
+//     //console.log(filterData);
+//     if (params.searchTerm) {
+//         andCondions.push({
+//             OR: flatSearchAbleFields.map(field => ({
+//                 [field]: {
+//                     contains: params.searchTerm,
+//                     mode: 'insensitive'
+//                 }
+//             }))
+//         })
+//     };
+
+//     if (Object.keys(filterData).length > 0) {
+//         andCondions.push({
+//             AND: Object.keys(filterData).map(key => ({
+//                 [key]: {
+//                     equals: (filterData as any)[key]
+//                 }
+//             }))
+//         })
+//     };
+
+//     // andCondions.push({
+//     //     isDeleted: false
+//     // })
+
+//     //console.dir(andCondions, { depth: 'inifinity' })
+//     const whereConditons: Prisma.FlatWhereInput = { AND: andCondions }
+
+//     const result = await prisma.flat.findMany(
+//         {
+//             where: whereConditons,
+//             skip,
+//             take: limit,
+//             orderBy: options.sortBy && options.sortOrder ? {
+//                 [options.sortBy]: options.sortOrder
+//             } : {
+//                 createdAt: 'desc'
+//             }
+//         }
+//     );
+
+//     const total = await prisma.flat.count();
+
+//     return {
+//         meta:{
+//             total,
+//         },
+//         data:result
+//     }
+
+// }
 const updateFlatFromDB = async(id:string,payload:Partial<Flat>) => {
     
    await prisma.flat.findUniqueOrThrow({

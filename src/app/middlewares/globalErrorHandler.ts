@@ -2,9 +2,13 @@ import { NextFunction, Request, Response } from "express"
 import httpStatus from "http-status"
 
 const globalErrorHandler = (err: any, req: Request, res: Response, next: NextFunction) => {
-    res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+    
+    const statusCode = err.status ||  500;
+    const message = err.message || 'Something went wrong';
+
+    res.status(statusCode).json({
         success: false,
-        message: err.message || "Something went wrong!",
+        message,
         error: err
     })
 };
