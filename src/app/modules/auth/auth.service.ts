@@ -81,8 +81,8 @@ const createUserIntoDB = async(data:any) => {
       const profile = await transactionClient.userProfile.create({
           data:{...userProfile,userId:user.id}
       })
-  
-      return user;
+      const {password,...data}=user;
+      return data;
 
     })
     return result;

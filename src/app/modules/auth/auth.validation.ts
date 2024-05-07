@@ -23,12 +23,24 @@ const refreshTokenZodSchema = z.object({
 
 const registerSchema = z.object({
     body:z.object({
-    name: z.string(),
-    email: z.string().email(),
-    password: z.string(),
-    bio: z.string(),
-    profession: z.string(),
-    address: z.string(),
+    name: z.string({
+        required_error:'Name Is Required'
+    }),
+    email: z.string({
+        required_error:"Email is required"
+    }),
+    password: z.string({
+        required_error:"Password is required"
+    }),
+    bio: z.string({
+        required_error:"Bio is required"
+    }),
+    profession: z.string({
+        required_error:"Profession is required"
+    }),
+    address: z.string({
+        required_error:"Address is required"
+    }),
     })
 });
 

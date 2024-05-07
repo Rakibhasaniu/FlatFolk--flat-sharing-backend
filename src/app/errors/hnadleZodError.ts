@@ -1,8 +1,6 @@
 import { ZodError, ZodIssue } from "zod";
-
-
 const handleZodError =(err:ZodError) => {
-    
+
     let errorDetails= {
         issues:err.issues.map((issue:ZodIssue) => {
             return {

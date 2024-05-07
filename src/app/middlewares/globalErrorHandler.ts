@@ -3,6 +3,7 @@ import httpStatus from "http-status"
 import { ZodError, ZodIssue, z } from "zod";
 import handleZodError from "../errors/hnadleZodError";
 import { TErrorDetails } from "../interface";
+import path from "path";
 
 const globalErrorHandler:ErrorRequestHandler = (err, req, res, next) => {
     
@@ -11,7 +12,7 @@ const globalErrorHandler:ErrorRequestHandler = (err, req, res, next) => {
     
     let errorDetails = {
         issues:[ {
-            // field:'',
+            field:'',
             message:'something went wrong'
         }]
     }
@@ -21,7 +22,7 @@ const globalErrorHandler:ErrorRequestHandler = (err, req, res, next) => {
         const simplifiedError = handleZodError(err)
         // console.log(simplifiedError)
         statusCode=simplifiedError?.statusCode,
-       message=simplifiedError?.message
+        message=simplifiedError?.message
         errorDetails=simplifiedError?.errorDetails
         
     }

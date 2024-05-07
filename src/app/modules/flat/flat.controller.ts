@@ -1,4 +1,4 @@
-import { RequestHandler } from "express";
+import { Request, RequestHandler, Response } from "express";
 import { FlatServices } from "./flat.service";
 import catchAsync from "../../utils/catchAsync";
 import pick from "../../utils/pick";
@@ -23,36 +23,22 @@ const createFlat = catchAsync(async(req,res) => {
 
 })
 
-// const getAllFlat = catchAsync(async(req,res) => {
-//     const filters = pick(req.query,flatFilterAbleFields);
-//     const options = pick(req.query, ['limit', 'page', 'sortBy', 'sortOrder'])
-
-//     const result = await FlatServices.getAllFlatFromDB(filters,options);
-
-//     sendResponse(res,{
-//         statusCode:httpStatus.OK,
-//         success:true,
-//         message: 'Flats retrieved successfully',
-//         meta:result?.meta,
-//         data:result.data
-//     })
-// })
-const getAllFlat = catchAsync(async (req, res) => {
-    // console.log(req.query)
+const getAllFlat = catchAsync(async (req: Request, res: Response) => {
     const filters = pick(req.query, flatFilterAbleFields);
-    const options = pick(req.query, ['limit', 'page', 'sortBy', 'sortOrder'])
+    console.log(filters)
+    const options = pick(req.query, ['limit', 'page', 'sortBy', 'sortOrder']);
     // console.log(options)
-    const result = await FlatServices.getAllFlatFromDB(filters,options)
-
+    const result = await FlatServices.getAllFlatFromDB(req.query);
     sendResponse(res, {
-        statusCode: httpStatus.OK,
-        success: true,
-        message: "Flats retrieved successfully",
-        // meta: result.meta,
-        // data: result.data
-        data:result
-    })
-})
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Flat retrieval successfully',
+      meta: result.meta,
+      data: result.data,
+    // data:result
+    });
+  });
+
 const updateFlat = catchAsync(async(req,res)=>{
     const {flatId} = req.params;
     const result = await FlatServices.updateFlatFromDB(flatId,req.body)

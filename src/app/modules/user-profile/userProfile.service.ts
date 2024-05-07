@@ -1,8 +1,12 @@
 import prisma from "../../utils/prisma"
 
 
-const getUserProfileFromDB = async() => {
-    const result = await prisma.userProfile.findMany();
+const getUserProfileFromDB = async(user:any) => {
+    const result = await prisma.userProfile.findUniqueOrThrow({
+        where:{
+            userId:user.id,
+        }
+    });
     
     return result;
 }

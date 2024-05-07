@@ -5,8 +5,10 @@ import { UserProfileServices } from "./userProfile.service";
 import { decodedToken } from "../../utils/decodeToken";
 
 
-const getUserProfile = catchAsync(async(req,res) => {
-    const result = await UserProfileServices.getUserProfileFromDB();
+const getUserProfile = catchAsync(async(req ,res) => {
+    const user = req.user;
+    console.log(user)
+    const result = await UserProfileServices.getUserProfileFromDB(user);
 
     sendResponse(res,{
         statusCode:httpStatus.OK,
