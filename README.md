@@ -6,15 +6,7 @@ Welcome to the **Flat Sharing Server** project! This repository contains the ser
 
 1. **Clone the Repository:**
     
-    ```bash
-    git clone https://github.com/Programming-Hero-Next-Level-Development/health-care-server.git
-    ```
-    
 2. **Navigate to the Project Directory:**
-    
-    ```bash
-    cd health-care-server
-    ```
     
 3. Please update the filename from `.env.example` to `.env`
 4. **Install Dependencies:**
