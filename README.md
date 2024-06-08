@@ -1,7 +1,7 @@
 
 ## Server
 
-### Server Side Url: https://flatfinder-chi.vercel.app/api
+### Server Side Url: https://flatbuzz.vercel.app/api
 
   
 ##### Technology Used: ```Node, Express, TypeScript, Prisma, PostgreSQL, ```
