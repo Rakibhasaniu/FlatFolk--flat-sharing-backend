@@ -2,28 +2,34 @@ import { NextFunction, Request, Response } from "express";
 import { Secret } from "jsonwebtoken";
 import httpStatus from "http-status";
 import AppError from "../errors/AppError";
-import { decodedToken } from "../utils/decodeToken";
+import { jwtHelpers } from "../../helper/jwtHelpers";
+import config from "../../config";
 
-const auth = () => {
-    return async (req: Request & { user?: any }, res: Response, next: NextFunction) => {
-        try {
-            const token = req.headers.authorization;
+const auth = (...roles: string[]) => {
+  return (req: Request & { user?: any }, res: Response, next: NextFunction) => {
+    const token = req.headers.authorization;
 
-            if (!token) {
-                throw new AppError(httpStatus.UNAUTHORIZED, "Unauthorized Access");
-            }
+    if (!token) {
+      throw new AppError(httpStatus.UNAUTHORIZED, "You are not authorized!");
+    }
 
-            const verifiedUser = decodedToken.verifyToken(token, 'asjchgsccvbfh');
-            // console.log(verifiedUser)
+    const verifiedUser = jwtHelpers.verifyToken(
+      token,
+      config.jwt.JWT_SECRET as Secret
+    );
 
-            req.user = verifiedUser;
-            // req.token=token;
+    if (!verifiedUser) {
+      throw new AppError(httpStatus.UNAUTHORIZED, "You are not authorized!");
+    }
 
-            next();
-        } catch (err) {
-            next(err);
-        }
-    };
+    req.user = verifiedUser;
+
+    if (roles.length && !roles.includes(verifiedUser.role)) {
+      throw new AppError(httpStatus.FORBIDDEN, "Forbidden access!");
+    }
+
+    next();
+  };
 };
 
 export default auth;

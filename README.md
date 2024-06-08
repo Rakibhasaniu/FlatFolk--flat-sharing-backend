@@ -1,69 +1,98 @@
-# **Flat Sharing Server**
+# Flat Finder 
+## Server
 
-Welcome to the **Flat Sharing Server** project! This repository contains the server-side code for our Flat Sharing Server. This README file provides guidelines on how to build and contribute to the project as a team. Please make sure to follow these instructions to maintain a consistent and efficient development process.
+### Server Side Url: https://flatfinder-chi.vercel.app/api
 
-## **Getting Started**
-
-1. **Clone the Repository:**
-    
-2. **Navigate to the Project Directory:**
-    
-3. Please update the filename from `.env.example` to `.env`
-4. **Install Dependencies:**
-    
-    ```bash
-    yarn install
-    ```
-    
-5. **Start the Server:**
-    
-    ```bash
-    yarn dev
-    ```
-    
-    The server will be running at **`http://localhost:3000`** .
-    
-
-## **Contributing Guidelines**
-
-To contribute to the project, follow these guidelines:
-
-1. **Create a Feature Branch:**
-Before starting work on a new feature, create a feature branch:
-    
-    ```bash
-    git checkout -b feature/your-feature-name
-    ```
-    
-2. **Write Code:**
-Implement the feature or fix the bug on your feature branch.
-3. **Commit Changes:**
-Commit your changes with a meaningful commit message:
-    
-    ```bash
-    git commit -m "Add your commit message here"
-    ```
-    
-4. **Push Changes:**
-Push your changes to your feature branch:
-    
-    ```bash
-    git push origin feature/your-feature-name
-    ```
-    
-5. **Create a Pull Request (PR):**
-Create a pull request from your feature branch to the **`development`** branch on GitHub. Ensure the PR title and description are descriptive.
-6. **Code Review:**
-Your code will be reviewed by other team members. Address any feedback and make necessary changes.
-
-## **Additional Notes**
-
-- **Main Branch:**
-The **`main`** branch is reserved for stable releases. Do not directly push to the main branch.
-- **Issues and Bug Tracking:**
-Use the GitHub Issues tab to report bugs, suggest features, or discuss enhancements.
-- **Coding Standards:**
-Follow the coding standards and conventions established by the team. Ensure your code is well-documented.
+- ### Application Summary
+- ##### Flat Finder server built with Node.js Express application with TypeScript as the programming language and PostgreSQL with Prisma. It utilizes PostgreSQL through Prisma for data storage. use incorporates JSON web token for user authentication.
+  
+##### Technology Used: ```Node, Express, TypeScript, Prisma, PostgreSQL, ```
 
 
-#### Postman API Documentation: https://documenter.getpostman.com/view/26694209/2s9YynmjXH
+- Anyone can Register on this application.
+- Anyone can view all the information.
+- User can add a flat.
+- User can Edit and Update a flat.
+- User can do a Flat Share Request.
+- User can Update and edit his flat.
+- User can get his profile information.
+- User can Update his profile.
+
+- ### Local Setup Instructions
+- Clone the repository
+  `https://github.com/jubayer44/flat-finder-server.git`
+- Navigate to the project directory
+  `cd your-folder`
+- Install dependencies
+  `npm install`
+- Create a`.env` file in the root of the project and set the following environment variables
+
+```
+NODE_ENV="Development"
+PORT = 5000
+DATABASE_URL = your postgres_url
+JWT_SECRET= your secret
+EXPIRES_IN = 30m
+REFRESH_TOKEN_SECRET = your refresh secret
+REFRESH_TOKEN_EXPIRES_IN = 30d
+```
+
+##### Running the application
+
+- Development Mode
+  `npm run dev`
+- Production Mode
+
+```
+npm run build
+npm start
+```
+
+
+#### **Models**
+
+This Application has 3 models.
+
+1. User Model
+2. Flat Model
+3. Flat Share Model
+
+### **1. User Model:**
+
+- **Fields:**
+    - **id (String):** A distinctive identifier for each user.
+    - **username (String):** username of the user.
+    - **email (String):** The email address of the user.
+    - **password (String):** The hashed password of the user.
+    - **status (String):** The status of the user.
+    - **createdAt (DateTime):** The timestamp indicates when the user was created.
+    - **updatedAt (DateTime):** The timestamp indicates when the user was last updated.
+
+### **2. Flat Model:**
+
+- **Fields:**
+    - **id (String):** A distinctive identifier for each flat.
+    - **bedrooms(Integer):** Number of bedrooms (e.g. 1/2/3/4/5/6).
+    - **location (String):** The location where the flat is currently located (e.g. holding number, street, area, city).
+    - **description (String):** A description of the flat (e.g. Master bed room size(square feet), others room size(square feet), open space, veranda, terrace space etc. ).
+    - **rentAmount (Integer):** Rent Amount.
+    - **advanceAmount (Integer):** Advance amount.
+    - **postBy (String):** User id.
+    - **createdAt (DateTime):** The timestamp indicates when flat was created.
+    - **updatedAt (DateTime):** The timestamp indicates when the flat was last updated.
+
+  ### **3. Flat Share Request Model:**
+
+- **Fields:**
+    - **id (String):** A distinctive identifier for each user profile.
+    - **userId (String):** A reference to the user associated with the user.
+    - **flatId (String):** A reference to the user associated with the flat.
+    - **status (String):** Request Status.
+    - **space (Int):** Total space for sharing.
+    - **message (String):** A brief bio or message of the user.
+    - **createdAt (DateTime):** The timestamp indicates when the user profile was created.
+    - **updatedAt (DateTime):** The timestamp indicates when the user profile was last updated.
+
+
+
+## Thank You

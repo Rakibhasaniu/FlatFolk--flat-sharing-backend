@@ -1,35 +1,30 @@
-import { Router } from "express";
-import { FlatRoutes } from "../modules/flat/flat.route";
-import { UserRoute } from "../modules/user/user.route";
-import { UserProfileRoutes } from "../modules/user-profile/userProfile.route";
-import { AuthRoutes } from "../modules/auth/auth.route";
-import { BookingRoutes } from "../modules/booking/booking.route";
+import express from "express";
+import { UserRoutes } from "../modules/User/user.routes";
+import { FlatRoutes } from "../modules/Flat/flat.routes";
+import { AuthRoutes } from "../modules/Auth/auth.routes";
+import { FlatShareRoutes } from "../modules/FlatShare/flatShare.routes";
 
-
-const router = Router();
+const router = express.Router();
 
 const moduleRoutes = [
-    {
-        path:'/flats',
-        route: FlatRoutes
-    },
-    // {
-    //     path:'/user',
-    //     route: UserRoute
-    // },
-    {
-        path:'/',
-        route: UserProfileRoutes
-    },
-    {
-        path:'/',
-        route: AuthRoutes
-    },
-    {
-        path:'/',
-        route: BookingRoutes
-    },
-]
+  {
+    path: "/",
+    route: UserRoutes,
+  },
+  {
+    path: "/auth",
+    route: AuthRoutes,
+  },
+  {
+    path: "/flats",
+    route: FlatRoutes,
+  },
+  {
+    path: "/",
+    route: FlatShareRoutes,
+  },
+];
 
-moduleRoutes.forEach(route => router.use(route.path, route.route));
-export default  router;
+moduleRoutes.forEach((route) => router.use(route.path, route.route));
+
+export default router;
